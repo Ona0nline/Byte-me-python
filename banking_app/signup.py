@@ -1,4 +1,37 @@
 # signup.py - Placeholder for signup functionality
+import csv
+
+def password_check(password):
+    
+    count = 0
+    if len(password) > 8:
+        count += 1
+        return True
+    if any(char.isupper() for char in password):
+        count += 1
+        return True
+    if any(char.islower() for char in password):
+        count += 1
+        return True
+    if any(char.isdigit() for char in password):
+        count += 1
+        return True
+    
+    if count == 4:
+        print("Valid")
+        return True
+    else:
+        raise ValueError("Password incorrect somehow")
+    
+def username_check(username):
+    with open('database.csv', 'r') as csv_file:
+        database_reader = csv.DictReader(csv_file)
+        
+        for row in database_reader:
+            if username == row['username']:
+                raise ValueError("Username already exsists")
+            else:
+                return True
 
 def signup(username, password, email):
     """
@@ -35,3 +68,24 @@ def signup(username, password, email):
     Returns:
     - bool: `True` if the signup is successful, otherwise raises a `ValueError` for invalid input.
     """
+
+    
+    special_char = "!@#$%^&*()?/|<>,.:;~`'"
+    if username.isspace() or password.isspace():
+        raise ValueError("Username or Password cannot be empty")
+
+    for char in special_char:
+        if char in username:
+            raise ValueError("Username cannot contain special characters")
+        
+    email_stuff = "gmail yahoo @ .com"
+    if any(char not in email for char in email_stuff):
+        raise ValueError("Email is in incorrect format")
+    
+    with open('database.csv', 'w') as csv_file:
+        field_names = ['username','password','email','account_id','balance']
+        database_writer = csv.DictWriter(csv_file,fieldnames=field_names)      
+          
+        database_writer.writerow({'username':username, 'password':password, 'email':email,'account_id': 'example','balance':'example'})
+
+print(signup('OnaOnline', 'Zwan30n@', 'onasihle123@gmail.com'))

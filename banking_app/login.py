@@ -1,5 +1,10 @@
 # login.py - Placeholder for login functionality
+import sys
+import csv
 
+def main():
+    login(username,password)
+    
 def login(username, password):
     """
     Handles the user login process by verifying the provided username and password.
@@ -33,3 +38,32 @@ def login(username, password):
     - bool: `True` if login is successful, `False` if login fails, or raises a `ValueError` for invalid input.
 
     """
+    special_char = "! @ # $ % ^& * ( ) ? / | < > , . : ; ~ ` ' "
+    if username.isspace() or password.isspace():
+        raise ValueError("Username or Password cannot be empty")
+
+    for char in special_char:
+        if char in username or char in password:
+            raise ValueError("Username cannot contain special characters")
+            
+    with open('database.csv', 'r') as csv_file:
+        database_reader = csv.DictReader(csv_file)
+        
+        for row in database_reader:
+            print(row)
+            print(row['username'])
+            if username not in row['username']:
+              print("Not here")
+            #   return False
+            else:
+                print(row['password'])
+                if row["password"] == password:
+                    return True
+                else:
+                    return
+
+if __name__ == "__main__":
+    username = input("Username: ")
+    password = input("Password: ")
+    
+    main()

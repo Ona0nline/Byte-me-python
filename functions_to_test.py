@@ -1,28 +1,49 @@
 # Placeholder functions for Python basics, to be implemented later
 
 def add_numbers(a, b):
-    pass
+    return a + b
 
 def find_maximum(a, b, c):
-    pass
+    if a > b and a > c:
+        return a
+    if b > a and b > c:
+        return b
+    if c > a and  c > b:
+        return c
 
 def is_palindrome(string):
-    pass
-
+    
+    string_rev = string[::-1]
+    print(f"{string}, {string_rev}")
+    if string_rev == string:
+        print("Is palindrome")
+        return True
+        
 def count_word_occurrences(text, word):
-    pass
+    
+    count = 0 
+    text = text.split()
+    
+    for chars in text:
+        if word == chars:
+            count += 1
+    # print(count)
+    return count
 
 def read_file_lines(filepath):
-    pass
+    with open(filepath, 'r') as file_to_read:
+        file_reader = file_to_read.readlines()
+        print(file_reader)
 
 def factorial(n):
     pass
 
 def is_prime(n):
-    pass
+    
 
 def sort_numbers(numbers):
-    pass
+    sorted_nums = sorted(numbers)
+    print(sorted_nums)
 
 def factorial(n):
     pass
@@ -59,3 +80,7 @@ if __name__ == "__main__":
     # Placeholder functions for Python basics, to be implemented later
     #to test your functions, you can use the following code
     print(add_numbers(3, 5)) #e.g
+    print(find_maximum(2, 90, 4))
+    print(is_palindrome("mom"))
+    print(sort_numbers([1,4,3,6,2]))
+    print(count_word_occurrences("I am a little teacup short and stout little little one", "little"))
